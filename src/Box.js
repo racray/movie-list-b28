@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import { Mvs } from './Mvs';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -17,11 +18,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MailIcon from '@mui/icons-material/Mail';
 import SvgIcon from '@mui/material/SvgIcon';
 import Icon from '@mui/material/Icon';
-import { CallMovie } from './CallMovie';
+import { MovieInput } from './MovieInput';
 import { AddColor } from './AddColor';
-
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link
@@ -114,7 +113,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export function MiniDrawer() {
+export function MiniDrawer({movies,setMovies}) {
   const theme = useTheme();
   
   const [open, setOpen] = React.useState(false);
@@ -127,8 +126,11 @@ export function MiniDrawer() {
     setOpen(false);
   };
 
+  
+
+ 
   return (
-  <Router>
+  
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -166,9 +168,16 @@ export function MiniDrawer() {
             </ListItem>
           <ListItem button key="Movie List">
             <ListItemIcon>
+            <Icon color="primary">add_circle</Icon>
+              
+              </ListItemIcon>
+              <Link to="/Mvs">Movie List</Link>
+            </ListItem>
+            <ListItem button key="Adding Movie">
+            <ListItemIcon>
                 <MailIcon color="primary" />
               </ListItemIcon>
-              <Link to="/CallMovie">Movie List</Link>
+              <Link to="/MovieInput">Adding Movie</Link>
             </ListItem>
             <ListItem button key="Color Picker">
               <ListItemIcon>
@@ -184,8 +193,13 @@ export function MiniDrawer() {
        
       </Drawer>
       <Switch>
-          <Route exact path="/CallMovie">
-            <CallMovie />
+          <Route exact path="/Mvs">
+          <section className="container">
+              {movies.map((mv)=>  <Mvs movies={mv} setMovies={setMovies}/>  )}
+          </section>
+          </Route>
+          <Route path="/MovieInput">
+            <MovieInput movies={movies} setMovies={setMovies}/>
           </Route>
           <Route path="/AddColor">
             <AddColor />
@@ -195,7 +209,7 @@ export function MiniDrawer() {
           </Route>
         </Switch>
     </Box>
-    </Router>
+    
   );
 }
 

@@ -2,11 +2,11 @@ import { Counter } from './Counter';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 
-export function Mvs({ title, picture, rating, summary }) {
+export function Mvs({ movies }) {
   const [show,setShow] = useState(true)
 
   const styles = {
-    color: rating < 8 ? "crimson" : "green",fontWeight:"bold"
+    color: movies.rating < 8 ? "crimson" : "green",fontWeight:"bold"
   };
   const summarystyles = {
     display: show ? "block" : "none"
@@ -15,11 +15,11 @@ export function Mvs({ title, picture, rating, summary }) {
 
   return (
     <div className="movie-div">
-      <h1 className="movie-title"> {title} </h1>
-      <img className="movie-picture" src={picture} alt={title} />
-      <h3 className="movie-rating" style={styles}> 🌟: {rating} </h3>
+      <h1 className="movie-title"> {movies.title} </h1>
+      <img className="movie-picture" src={movies.picture} alt={movies.title} />
+      <h3 className="movie-rating" style={styles}> 🌟: {movies.rating} </h3>
       <Button onClick={()=>setShow(!show)} variant="outlined">{show ? "Hide" : "Show"} Description</Button>
-      <p style={summarystyles}> {summary} </p>
+      <p style={summarystyles}> {movies.summary} </p>
       <Counter/>
 
     </div>

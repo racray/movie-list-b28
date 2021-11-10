@@ -25,6 +25,7 @@ body{
 }
 
 .movie-div{
+  margin-top:5rem;
   border: 1px solid black;
   border-radius:1rem;
   background-image: linear-gradient(to right top, #e8e7ed, #dfdcf1, #d5d2f4, #cbc7f8, #c0bdfb, #bbb7f4, #b5b0ee, #b0aae7, #aea6d6, #aba3c6, #a6a0b6, #a09da6);
@@ -54,11 +55,11 @@ body{
   border-radius:1rem;
   background-image: linear-gradient(to right top, #e8e7ed, #dfdcf1, #d5d2f4, #cbc7f8, #c0bdfb, #bbb7f4, #b5b0ee, #b0aae7, #aea6d6, #aba3c6, #a6a0b6, #a09da6);
   width:35rem;
-  margin: auto;
+  margin-left:25rem;
   margin-top: 5rem;
   margin-bottom: 5rem;
   height:20rem;
-  width: 50%;
+  width: 30rem;
   border: 3px solid blue;
   padding: 10px;
 
@@ -70,7 +71,7 @@ body{
   position: relative;
   top:5rem;
   width:50%;
-  left:10rem;
+  left:8rem;
   margin-top:15rem;
 }
 
