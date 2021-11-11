@@ -1,6 +1,6 @@
 
 
-export function ColorBox({ color }) {
+export function ColorBox({ color,id }) {
   const styles = {
     backgroundColor: color,
     height: "40px",

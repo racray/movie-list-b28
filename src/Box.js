@@ -23,10 +23,10 @@ import { AddColor } from './AddColor';
 import {
     Switch,
     Route,
-    Link
-  } from "react-router-dom";
+    Link  } from "react-router-dom";
 import { Home } from './Home';
-
+import { MovieDetails } from './MovieDetails';
+import { MovieEdit } from './MovieEdit'
 
 export default function Icons() {
   return (
@@ -194,9 +194,15 @@ export function MiniDrawer({movies,setMovies}) {
       </Drawer>
       <Switch>
           <Route exact path="/Mvs">
-          <section className="container">
-              {movies.map((mv)=>  <Mvs movies={mv} setMovies={setMovies}/>  )}
-          </section>
+            <Mvs movies={movies} setMovies={setMovies}/>  
+          </Route>
+          <Route path="/Mvs/:id">
+            console.log(id);
+            <MovieDetails movies={movies}/>
+          </Route>
+          <Route path="/Edit/:id">
+            console.log(id);
+            <MovieEdit movies={movies} setMovies={setMovies}/>
           </Route>
           <Route path="/MovieInput">
             <MovieInput movies={movies} setMovies={setMovies}/>
@@ -207,9 +213,13 @@ export function MiniDrawer({movies,setMovies}) {
           <Route path="/Home">
             <Home />
           </Route>
+          <Route path="**">
+            Error Not Found
+          </Route>
         </Switch>
     </Box>
     
   );
 }
+
 

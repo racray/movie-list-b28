@@ -14,6 +14,6 @@ export function AddColor() {
       placeholder="Enter Color" />  
     </div>
     <Button onClick={() => setColors([...colors, color])} variant="contained">Add Color</Button>
-    {colors.map((clr) => <ColorBox color={clr} />)}
+    {colors.map((clr,id) => <ColorBox color={clr} key={id}/>)}
   </div>);
 }
