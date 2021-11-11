@@ -28,10 +28,9 @@ export function MovieEdit({ movies, setMovies }) {
             <TextField className="movie-title" value={trailer} placeholder="Edit Movie trailer"
                 onChange={(event) => { setTrailer(event.target.value); }} variant="standard" />
             <Button onClick={() => {
-
-                
-                const rem = movies.filter((mvx, idx) => parseInt(id)!==idx);
-                setMovies([...rem,{title,rating,summary,picture,trailer}]);
+                const mcopy = [...movies];
+                mcopy[id] = {title,picture,rating,summary,trailer};
+                setMovies(mcopy);
 
             }} variant="contained" className="add-button">Edit Movie</Button>
         </div >

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { Mvs } from './Mvs';
 import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -27,16 +26,7 @@ import {
 import { Home } from './Home';
 import { MovieDetails } from './MovieDetails';
 import { MovieEdit } from './MovieEdit'
-
-export default function Icons() {
-  return (
-    <Box
-      sx={{
-        '& > :not(style)': {
-          m: 2,
-        },
-      }}
-    ></Box>)}
+import { Drawer } from './Drawer';
 
 function HomeIcon(props) {
     return (
@@ -46,9 +36,9 @@ function HomeIcon(props) {
     );
   }
 
-const drawerWidth = 240;
+export const drawerWidth = 240;
 
-const openedMixin = (theme) => ({
+export const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -57,7 +47,7 @@ const openedMixin = (theme) => ({
   overflowX: 'hidden',
 });
 
-const closedMixin = (theme) => ({
+export const closedMixin = (theme) => ({
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -95,23 +85,6 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
-      '& .MuiDrawer-paper': openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme),
-    }),
-  }),
-);
 
 export function MiniDrawer({movies,setMovies}) {
   const theme = useTheme();
