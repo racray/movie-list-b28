@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Mvs } from './Mvs';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
@@ -27,6 +27,15 @@ import { Home } from './Home';
 import { MovieDetails } from './MovieDetails';
 import { MovieEdit } from './MovieEdit'
 import { Drawer } from './Drawer';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Paper from '@mui/material/Paper';
+import { useState } from 'react';
+import { createContext,useContext } from 'react' 
+import Button from '@mui/material/Button';
+
+const context = createContext({ modec: "black" }); 
 
 function HomeIcon(props) {
     return (
@@ -87,7 +96,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export function MiniDrawer({movies,setMovies}) {
-  const theme = useTheme();
   
   const [open, setOpen] = React.useState(false);
 
@@ -98,12 +106,20 @@ export function MiniDrawer({movies,setMovies}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const [modec,setCmode] = useState("light")
 
+  const theme = createTheme({
+    palette: {
+      mode: modec,
+    },
+  });
   
+
 
  
   return (
-  
+    <ThemeProvider theme={theme}>
+      <Paper elevation={3} style={{width:"100vw",minHeight:"100vh"}}>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -123,6 +139,11 @@ export function MiniDrawer({movies,setMovies}) {
           <Typography variant="h6" noWrap component="div">
             Navigation Bar
           </Typography>
+          <context.Provider value={{modec,setCmode}}>
+          <Typography variant="h6" noWrap component="div" style={{marginLeft:"auto"}}>
+            <ToggleColorMode />
+          </Typography>
+          </context.Provider>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} className="drawer">
@@ -191,8 +212,29 @@ export function MiniDrawer({movies,setMovies}) {
           </Route>
         </Switch>
     </Box>
-    
+    </Paper>
+    </ThemeProvider>
   );
 }
 
+
+
+
+
+
+function ToggleColorMode() {
+  const {modec,setCmode} = useContext(context);
+  const moded = modec === "dark" ? "light" : "dark";
+  return (
+    <div className="ToggleColor" style={
+      {
+        backgroundColor: modec==="dark" ? "brown" : "blue"
+      }
+    } >
+    <Button onClick={()=>{
+      setCmode(modec==="dark" ? "light": "dark")}}> 
+    {moded} mode : {modec === "dark" ? <Brightness4Icon/>: <Brightness7Icon/>} 
+    </Button></div>
+  );
+}
 

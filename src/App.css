@@ -1,11 +1,12 @@
 body{
-  height:100vh;
-  background-image: linear-gradient(to right top, #7d6bd1, #725ddb, #654fe4, #553fed, #402df5, #472df8, #4e2cfc, #552cff, #7041ff, #8555ff, #9868ff, #a87aff);
+  min-height:100vh;
+  /* background-image: linear-gradient(to right top, #7d6bd1, #725ddb, #654fe4, #553fed, #402df5, #472df8, #4e2cfc, #552cff, #7041ff, #8555ff, #9868ff, #a87aff); */
 }
 
 .container{
   display:flex;
   flex-wrap: wrap;
+  margin-top: 5rem;
   gap:2rem;
   margin-left: 1rem;
   justify-content: space-evenly;
@@ -32,6 +33,7 @@ body{
   width:35rem;
   padding: 1rem;
   margin-left: 1rem;
+  height:min-content;
 }
 
 .movie-title:hover{
@@ -40,6 +42,7 @@ body{
 
 .movie-rating{
   text-align:right;
+  margin-right: 10px;
 }
 
 .counter-likdis{
@@ -122,4 +125,11 @@ body{
   width: 30rem;
   border: 3px solid blue;
   padding: 10px;
+}
+
+
+
+
+.ToggleColor{
+  background-color: purple;
 }

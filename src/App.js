@@ -3,7 +3,7 @@ import './App.css';
 
 import { useState } from 'react';
 import { MiniDrawer} from './Box'
-
+import React from "react";
 
 export default function App(){
   const mov = [{title:"Fight Club", picture:"http://cdn.shopify.com/s/files/1/0151/0741/products/PGX0013_1024x1024.jpg?v=1578633303", rating: 8.8,summary:"A depressed man (Edward Norton) suffering from insomnia meets a strange soap salesman named Tyler Durden (Brad Pitt) and soon finds himself living in his squalid house after his perfect apartment is destroyed. The two bored men form an underground club with strict rules and fight other men who are fed up with their mundane lives. Their perfect partnership frays when Marla (Helena Bonham Carter), a fellow support group crasher, attracts Tyler's attention.",trailer:"https://www.youtube.com/embed/qtRKdVHc-cE"},

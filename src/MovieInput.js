@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useHistory } from 'react-router-dom';
 
 export function MovieInput({ movies, setMovies }) {
-
+  const history = useHistory();
   const [title, setTitle] = useState(movies[0].title);
   const [picture, setPicture] = useState(movies[0].picture);
   const [rating, setRating] = useState(movies[0].rating);
@@ -23,7 +24,10 @@ export function MovieInput({ movies, setMovies }) {
       onChange={(event) => setTrailer(event.target.value)} variant="standard" />      
     <Button onClick={() => {
       setMovies([...movies, { title, picture, rating, summary, trailer }]);
-    }} variant="contained" className="add-button">Add Movie</Button>
+      history.push("/Mvs")
+
+    }
+    } variant="contained" className="add-button">Add Movie</Button>
     
   </div>);
 }

@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useHistory } from 'react-router-dom';
 
+    
 export function MovieEdit({ movies, setMovies }) {
-
+    const history = useHistory();
     const { id } = useParams();
     const movie = movies[id];
     const [title, setTitle] = useState(movie.title);
@@ -31,7 +33,7 @@ export function MovieEdit({ movies, setMovies }) {
                 const mcopy = [...movies];
                 mcopy[id] = {title,picture,rating,summary,trailer};
                 setMovies(mcopy);
-
+                history.push("/Mvs")
             }} variant="contained" className="add-button">Edit Movie</Button>
         </div >
     );
