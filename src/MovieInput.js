@@ -60,11 +60,7 @@ export function MovieInput() {
       .then((mvs) => setMovies(mvs))
   }, []);
   const history = useHistory();
-  // const [title, setTitle] = useState("");
-  // const [picture, setPicture] = useState("");
-  // const [rating, setRating] = useState("");
-  // const [summary, setSummary] = useState("");
-  // const [trailer, setTrailer] = useState("");
+ 
   return (
     <form onSubmit={handleSubmit} className="movie-input">
       <TextField placeholder="Enter Movie Title"

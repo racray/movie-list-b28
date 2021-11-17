@@ -59,12 +59,6 @@ function EditM({movie}){
 
 
 
-    // const [title, setTitle] = useState(movie.title);
-    // const [picture, setPicture] = useState(movie.picture);
-    // const [rating, setRating] = useState(movie.rating);
-    // const [summary, setSummary] = useState(movie.summary);
-    // const [trailer, setTrailer] = useState(movie.trailer);
-
 
     const { handleSubmit,values,handleChange,handleBlur,errors,touched} = useFormik({
         initialValues: { title: movie.title, picture: movie.picture, rating: movie.rating, summary: movie.summary, trailer: movie.trailer,},

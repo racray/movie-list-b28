@@ -162,3 +162,8 @@ body{
   justify-content:center;
 }
 
+.className{
+  display:flex;
+  margin-top:3rem;
+  gap:5rem;
+}

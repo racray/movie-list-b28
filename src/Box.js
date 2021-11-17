@@ -33,15 +33,15 @@ import Paper from '@mui/material/Paper';
 import { useState } from 'react';
 import { createContext, useContext } from 'react'
 import Button from '@mui/material/Button';
-import useWindowSize from 'react-use/lib/useWindowSize';
-import Confetti from 'react-confetti';
 import HdIcon from '@mui/icons-material/Hd';
 import MovieIcon from '@mui/icons-material/Movie';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import {  useFormik } from 'formik';
 import * as yup from 'yup';
-
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import { TicTacToe } from './TicTacToe';
+import TextField from '@mui/material/TextField';
 
 
 // const validateForm = (values) => {
@@ -210,7 +210,7 @@ export function MiniDrawer({ movies, setMovies }) {
               </ListItem>
               <ListItem button key="Form Validation">
                 <ListItemIcon>
-                  <VideogameAssetIcon color="primary"/>
+                  <FormatAlignCenterIcon color="primary"/>
                 </ListItemIcon>
                 <Link to="/FormValidation">Form Validation</Link>
               </ListItem>
@@ -278,135 +278,15 @@ function ToggleColorMode() {
   );
 }
 
-function TicTacToe() {
-  const nullv = [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
-  ];
-  const { width, height } = useWindowSize();
-  const [board, setBoard] = useState([
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
-  ])
-  const [isXTurn, setIsXTurn] = useState(true);
-
-  const decideWinner = (board) => {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ]
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (board[a] !== null && board[a] === board[b] && board[b] === board[c]) {
-        return board[a];
-      }
-    }
-    return null;
-  };
-
-  const winner = decideWinner(board);
-
-  const handleClick = (index) => {
-    //winner == null becoz stop after wining
-    // !board[index] fix a value on a box
-
-    if (winner === null && !board[index]) {
-      const boardCopy = [...board];
-      boardCopy[index] = isXTurn ? "X" : "O";
-      setBoard(boardCopy);
-      setIsXTurn(!isXTurn);
-    }
-
-
-  };
-
-  const change = () => {
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board.length; j++) {
-        if (board[j] === "X" || board[j] === "O") {
-          return "none";
-        }
-      }
-      return "block";
-    }
-  }
-
-  const changeturn = {
-    display: change(),
-    textAlign: "center",
-    margin: "auto"
-  }
-
-  const turn = {
-    textAlign: "center",
-    display: winner ? "none" : "block"
-  }
-
-  return (
-    <div className="full-game">
-      <Paper elevation={3} style={{ marginLeft: "30rem", marginTop: "7rem" }}>
-        {isXTurn ? <div><h4 style={turn}>Its X's turn </h4></div> : <div><h4 style={turn}>Its O's turn </h4></div>}
-
-        {winner ? <Confetti width={width} height={height} gravity={0.03} /> : ""}
-        <div className="board">
-          {/* val takes value from board and board value changes by setboard */}
-          {board.map((val, index) => (
-            <GameBox val={val} onPlayerClick={() => handleClick(index)} />
-          ))}
-        </div>
-
-        {isXTurn ? <Button onClick={() => { setIsXTurn(!isXTurn); }} style={changeturn}>Change to O's turn</Button> : <Button onClick={() => { setIsXTurn(!isXTurn); }} style={changeturn}>Change to X's turn</Button>}
-
-        {winner ? <h1 style={{ textAlign: "center",color:"crimson",fontSize:"3rem" }}>Winner is : {winner} </h1> : ""}
-        <Button onClick={() => {
-          setBoard(nullv)
-        }} variant="outlined" style={{ marginLeft: "10rem", marginTop: "3rem" }}>Reset</Button>
-      </Paper>
-    </div>
-  );
-}
-
-function GameBox({ onPlayerClick, val }) {
-  const styles = { color: val === "X" ? "red" : "blue" };
-  return (
-    <div style={styles} onClick={onPlayerClick} className="game-box">
-      {val}
-    </div>
-  );
-
-}
-
-
 const formValidationSchema = yup.object({
   email:yup
   .string()
   .min(5,"Need bigger email")
-  .required("why not fill"),
+  .required("Please enter email"),
   password:yup
   .string()
-  .min(8,"require longer")
-  .max(12,"require shorter")
-  .required("fill this pls"),
+  .min(8,"require longer password")
+  .required("Please enter valid password"),
 
 })
 
@@ -422,8 +302,8 @@ function FormValidation(){
   });
 
   return(
-    <form onSubmit={handleSubmit} style={{marginTop:"30rem"}}>
-      <input
+    <form onSubmit={handleSubmit} style={{marginTop:"20rem",marginLeft:"25rem"}}>
+      <TextField
       id="email"
       name="email"
       value={values.email}
@@ -432,9 +312,7 @@ function FormValidation(){
       type="email"
       placeholder="Enter Email"
       />
-      {errors.email && touched.email && errors.email}
-      {/* {formik.errors.password && } */}
-      <input
+      <TextField
       id="password"
       name="password"
       value={values.password}
@@ -443,8 +321,13 @@ function FormValidation(){
       type="password"
       placeholder="Enter Password"
       />
+      <Button type="submit">submit</Button>
+      <div className="form-error">
+      {errors.email && touched.email && errors.email}
+      </div>
+      <div>
       {errors.password && touched.password && errors.password}
-      <button type="submit">submit</button>
+      </div>
     </form>
   )
 }
