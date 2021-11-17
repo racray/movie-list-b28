@@ -1,33 +1,124 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
+import {  useFormik } from 'formik';
 
-export function MovieInput({ movies, setMovies }) {
-  const history = useHistory();
-  const [title, setTitle] = useState(movies[0].title);
-  const [picture, setPicture] = useState(movies[0].picture);
-  const [rating, setRating] = useState(movies[0].rating);
-  const [summary, setSummary] = useState(movies[0].summary);
-  const [trailer,setTrailer] = useState(movies[0].trailer);
-  return (
-    <div className="movie-input">
-    <TextField placeholder="Enter Movie Title"
-      onChange={(event) => setTitle(event.target.value)} variant="standard" />
-    <TextField placeholder="Enter Movie image address"
-      onChange={(event) => setPicture(event.target.value)} variant="standard"/>
-    <TextField placeholder="Enter Movie Rating"
-      onChange={(event) => setRating(event.target.value)} variant="standard" />
-    <TextField placeholder="Enter Movie Summary"
-      onChange={(event) => setSummary(event.target.value)} variant="standard" />
-    <TextField placeholder="Enter Movie Trailer"
-      onChange={(event) => setTrailer(event.target.value)} variant="standard" />      
-    <Button onClick={() => {
-      setMovies([...movies, { title, picture, rating, summary, trailer }]);
+
+const formValidationSchema = yup.object({
+  title:yup
+  .string()
+  .min(5,"Need bigger Title")
+  .required("why not fill lol"),
+  picture:yup
+  .string()
+  .min(8,"require longer picture address")
+  .required("fill this pls"),
+  rating:yup
+  .number("enter only numbers")
+  .min(0,"require rating greater than 0")
+  .max(10,"require rating smaller than 10")
+  .required("fill this pls"),
+  summary:yup
+  .string()
+  .min(5,"require longer summary")
+  .required("fill this pls"),
+  trailer:yup
+  .string()
+  .min(5,"require longer trailer address")
+  .required("fill this pls")
+
+})
+
+
+export function MovieInput() {
+
+
+  const { handleSubmit,values,handleChange,handleBlur,errors,touched} = useFormik({
+    initialValues: { title: "", picture: "",rating: "", summary: "",trailer: "",},
+    validationSchema: formValidationSchema,
+    onSubmit: (newmovie) => {
       history.push("/Mvs")
-
+      fetch("https://6166c4d713aa1d00170a66f5.mockapi.io/movies", {
+        method: "POST",
+        body: JSON.stringify(newmovie),
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+        .then(() => history.push("/"))
+      console.log("onsubmit",values)
     }
-    } variant="contained" className="add-button">Add Movie</Button>
-    
-  </div>);
+  });
+
+  const [movies, setMovies] = useState([]);
+  console.log(movies);
+  useEffect(() => {
+    fetch("https://6166c4d713aa1d00170a66f5.mockapi.io/movies")
+      .then((data) => data.json())
+      .then((mvs) => setMovies(mvs))
+  }, []);
+  const history = useHistory();
+  // const [title, setTitle] = useState("");
+  // const [picture, setPicture] = useState("");
+  // const [rating, setRating] = useState("");
+  // const [summary, setSummary] = useState("");
+  // const [trailer, setTrailer] = useState("");
+  return (
+    <form onSubmit={handleSubmit} className="movie-input">
+      <TextField placeholder="Enter Movie Title"
+              id="title"
+              name="title"
+              value={values.title}
+              onChange={handleChange}
+              onBlur={handleBlur} 
+              helperText= {errors.title && touched.title && errors.title}
+
+        variant="standard" />
+
+      <TextField placeholder="Enter Movie image address"
+              id="picture"
+              name="picture"
+              value={values.picture}
+              onChange={handleChange}
+              onBlur={handleBlur}        
+              helperText= {errors.picture && touched.picture && errors.picture}
+
+              variant="standard" />
+              
+      <TextField placeholder="Enter Movie Rating"
+              id="rating"
+              name="rating"
+              value={values.rating}
+              onChange={handleChange}
+              onBlur={handleBlur} 
+              helperText= {errors.rating && touched.rating && errors.rating}
+              variant="standard" />
+             
+
+      <TextField placeholder="Enter Movie Summary"
+              id="summary"
+              name="summary"
+              value={values.summary}
+              onChange={handleChange}
+              onBlur={handleBlur}        
+              helperText= {errors.summary && touched.summary && errors.summary}
+
+              variant="standard" />
+
+
+      <TextField placeholder="Enter Movie Trailer"
+              id="trailer"
+              name="trailer"
+              value={values.trailer}
+              onChange={handleChange}
+              onBlur={handleBlur}        
+              helperText= {errors.trailer && touched.trailer && errors.trailer}
+
+              variant="standard" />
+
+      <Button  type="submit" variant="contained" className="add-button">Add Movie</Button>
+
+    </form>);
 }

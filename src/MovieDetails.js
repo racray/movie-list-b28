@@ -1,9 +1,18 @@
 import * as React from 'react';
 import { useParams } from "react-router-dom";
+import { useEffect,useState } from 'react';
 
-export function MovieDetails({ movies }) {
+export function MovieDetails() {
   const { id } = useParams();
-  const movie = movies[id];
+  const [movie,setMovie] = useState({});
+  useEffect(()=>{
+    fetch(`https://6166c4d713aa1d00170a66f5.mockapi.io/movies/${id}`,{
+      method:"GET",
+    })
+    .then((data)=>data.json())
+    .then((mvs)=>setMovie(mvs))
+  },[id])
+
   return (
     <div className="movie-div-select">
       <h1 className="movie-title"> {movie.title} </h1>

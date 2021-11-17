@@ -39,6 +39,24 @@ import HdIcon from '@mui/icons-material/Hd';
 import MovieIcon from '@mui/icons-material/Movie';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
+import {  useFormik } from 'formik';
+import * as yup from 'yup';
+
+
+
+// const validateForm = (values) => {
+//   const errors = {};
+//   console.log("validateforms",values);
+
+//   if(values.password.length < 8){
+//     errors.password = "Pls provide a longer password"
+//   }
+
+//   console.log(errors);
+//   return errors;
+
+// };
+
 
 const context = createContext({ modec: "black" });
 
@@ -190,6 +208,12 @@ export function MiniDrawer({ movies, setMovies }) {
                 </ListItemIcon>
                 <Link to="/TicTacToe">Tic-Tac-Toe</Link>
               </ListItem>
+              <ListItem button key="Form Validation">
+                <ListItemIcon>
+                  <VideogameAssetIcon color="primary"/>
+                </ListItemIcon>
+                <Link to="/FormValidation">Form Validation</Link>
+              </ListItem>
 
 
             </List>
@@ -218,6 +242,9 @@ export function MiniDrawer({ movies, setMovies }) {
             </Route>
             <Route path="/TicTacToe">
               <TicTacToe />
+            </Route>
+            <Route path="/FormValidation">
+              <FormValidation />
             </Route>
             <Route path="**">
               Error Not Found
@@ -367,4 +394,57 @@ function GameBox({ onPlayerClick, val }) {
     </div>
   );
 
+}
+
+
+const formValidationSchema = yup.object({
+  email:yup
+  .string()
+  .min(5,"Need bigger email")
+  .required("why not fill"),
+  password:yup
+  .string()
+  .min(8,"require longer")
+  .max(12,"require shorter")
+  .required("fill this pls"),
+
+})
+
+
+function FormValidation(){
+
+  const { handleSubmit,values,handleChange,handleBlur,errors,touched} = useFormik({
+    initialValues: { email: "", password: "",},
+    validationSchema: formValidationSchema,
+    onSubmit: (values) => {
+      console.log("onsubmit",values)
+    }
+  });
+
+  return(
+    <form onSubmit={handleSubmit} style={{marginTop:"30rem"}}>
+      <input
+      id="email"
+      name="email"
+      value={values.email}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      type="email"
+      placeholder="Enter Email"
+      />
+      {errors.email && touched.email && errors.email}
+      {/* {formik.errors.password && } */}
+      <input
+      id="password"
+      name="password"
+      value={values.password}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      type="password"
+      placeholder="Enter Password"
+      />
+      {errors.password && touched.password && errors.password}
+      <button type="submit">submit</button>
+    </form>
+  )
 }
