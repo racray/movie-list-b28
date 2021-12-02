@@ -34,28 +34,31 @@ const formValidationSchema = yup.object({
 
 export function MovieInput() {
 
+  const API_URL = "https://b28-wd-movies2.herokuapp.com" //export to another file and use across all files
+
 
   const { handleSubmit,values,handleChange,handleBlur,errors,touched} = useFormik({
     initialValues: { title: "", picture: "",rating: "", summary: "",trailer: "",},
     validationSchema: formValidationSchema,
     onSubmit: (newmovie) => {
-      history.push("/Mvs")
-      fetch("https://6166c4d713aa1d00170a66f5.mockapi.io/movies", {
+     
+      fetch(`${API_URL}/movies`, {
         method: "POST",
         body: JSON.stringify(newmovie),
         headers: {
           "Content-Type": "application/json"
         },
       })
-        .then(() => history.push("/"))
+        .then(() =>  history.push("/"))
       console.log("onsubmit",values)
     }
   });
 
   const [movies, setMovies] = useState([]);
   console.log(movies);
+
   useEffect(() => {
-    fetch("https://6166c4d713aa1d00170a66f5.mockapi.io/movies")
+    fetch(`${API_URL}/movies`)
       .then((data) => data.json())
       .then((mvs) => setMovies(mvs))
   }, []);

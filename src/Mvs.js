@@ -16,18 +16,21 @@ import Typography from '@mui/material/Typography';
 export function Mvs() {
   const history = useHistory();
   const [movies, setMovies] = useState([]);
+
+  const API_URL = "https://b28-wd-movies2.herokuapp.com" //export to another file and use across all files
+
   // console.log(movies);
   const getMovies = () => {
-    fetch("https://6166c4d713aa1d00170a66f5.mockapi.io/movies")
+    fetch(`${API_URL}/movies`)
       .then((data) => data.json())
       .then((mvs) => setMovies(mvs))
   };
 
   useEffect(getMovies, []);
 
-  const deleteMovie = (id) => {
+  const deleteMovie = (_id) => {
     // console.log(id)
-    fetch(`https://6166c4d713aa1d00170a66f5.mockapi.io/movies/${id}`, {
+    fetch(`${API_URL}/movies/${_id}`, {
       method: "DELETE",
     }).then(() => getMovies());
   };
@@ -48,7 +51,7 @@ export function Mvs() {
           <InfoButton
             color="secondary"
             onClick={() => {
-              history.push("/Mvs/" + mv.id)
+              history.push("/Mvs/" + mv._id)
             }}>
             <InfoIcon />
           </InfoButton>
@@ -59,12 +62,12 @@ export function Mvs() {
             <InfoButton
 
               onClick={() => {
-                history.push("/Edit/" + mv.id)
+                history.push("/Edit/" + mv._id)
               }}>
               <EditSharpIcon />
             </InfoButton>
             <InfoButton
-              onClick={() => deleteMovie(mv.id)}>
+              onClick={() => deleteMovie(mv._id)}>
               <DeleteSharpIcon />
             </InfoButton>
             <Counter />

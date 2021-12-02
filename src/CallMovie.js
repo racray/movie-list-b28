@@ -22,20 +22,20 @@ export function CallMovie({mv}) {
     const summarystyles = {
         display: show ? "block" : "none"
     };
-
+    const API_URL = "https://b28-wd-movies2.herokuapp.com"
     const [movies,setMovies] = useState([]);
     console.log(movies);
     const getMovies = () => {
-        fetch("https://6166c4d713aa1d00170a66f5.mockapi.io/movies")
+        fetch(`${API_URL}/movies`)
         .then((data)=>data.json())
         .then((mvs)=>setMovies(mvs))
     };
 
     useEffect(getMovies,[]);
 
-    const deleteMovie = (id) => {
-        console.log(id)
-        fetch(`https://6166c4d713aa1d00170a66f5.mockapi.io/movies/${id}`,{
+    const deleteMovie = (_id) => {
+        console.log(_id)
+        fetch(`${API_URL}/movies/${_id}`,{
             method:"DELETE",
         }).then(()=>getMovies());
     };
@@ -44,7 +44,8 @@ export function CallMovie({mv}) {
         
         <Card sx={{ maxWidth: 400, minWidth: 400 }}>
             <CardHeader
-                title={mv.title}
+                title={mv._id}
+                
             />
             <CardMedia
                 component="img"
@@ -55,7 +56,7 @@ export function CallMovie({mv}) {
             <InfoButton
                 color="secondary"
                 onClick={() => {
-                    history.push("/Mvs/" + mv.id)
+                    history.push("/Mvs/" + mv._id)
                 }}>
                 <InfoIcon />
             </InfoButton>
@@ -68,13 +69,13 @@ export function CallMovie({mv}) {
                 <InfoButton
 
                     onClick={() => {
-                        console.log(mv.id)
-                        history.push("/Edit/" + mv.id)
+                        console.log(mv._id)
+                        history.push("/Edit/" + mv._id)
                     }}>
                     <EditSharpIcon />
                 </InfoButton>
                 <InfoButton
-                    onClick={() => deleteMovie(mv.id)}>
+                    onClick={() => deleteMovie(mv._id)}>
                     <DeleteSharpIcon />
                 </InfoButton>
                 <Counter />

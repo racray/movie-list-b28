@@ -35,9 +35,10 @@ const formValidationSchema = yup.object({
 
 export function MovieEdit() {
     const { id } = useParams();
+    const API_URL = "https://b28-wd-movies2.herokuapp.com"
 
     useEffect(()=>{
-        fetch(`https://6166c4d713aa1d00170a66f5.mockapi.io/movies/${id}`,{
+        fetch(`${API_URL}/movies/${id}`,{
             method:"GET",
         })
         .then((data)=>data.json())
@@ -58,14 +59,14 @@ function EditM({movie}){
     const history = useHistory();
 
 
+    const API_URL = "https://b28-wd-movies2.herokuapp.com" //export to another file and use across all files
 
 
     const { handleSubmit,values,handleChange,handleBlur,errors,touched} = useFormik({
         initialValues: { title: movie.title, picture: movie.picture, rating: movie.rating, summary: movie.summary, trailer: movie.trailer,},
         validationSchema: formValidationSchema,
         onSubmit: (newmovie) => {
-          history.push("/Mvs")
-          fetch(`https://6166c4d713aa1d00170a66f5.mockapi.io/movies/${id}`, {
+          fetch(`${API_URL}/movies/${id}`, {
             method: "PUT",
             body: JSON.stringify(newmovie),
             headers: {
@@ -132,3 +133,4 @@ function EditM({movie}){
     </form >
     )
 }
+

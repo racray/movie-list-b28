@@ -5,8 +5,11 @@ import { useEffect,useState } from 'react';
 export function MovieDetails() {
   const { id } = useParams();
   const [movie,setMovie] = useState({});
+  const API_URL = "https://b28-wd-movies2.herokuapp.com"
+
+
   useEffect(()=>{
-    fetch(`https://6166c4d713aa1d00170a66f5.mockapi.io/movies/${id}`,{
+    fetch(`${API_URL}/movies/${id}`,{
       method:"GET",
     })
     .then((data)=>data.json())
