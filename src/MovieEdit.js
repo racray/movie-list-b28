@@ -74,12 +74,10 @@ function EditM({movie}){
             },
           })
             .then(() => history.push("/"))
-          console.log("onsubmit",values)
         }
       });
 
 
-    // console.log(title,picture,rating,summary,trailer);
 
     return (
         <form onSubmit={handleSubmit} className="movie-edit">

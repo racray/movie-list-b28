@@ -16,7 +16,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import SvgIcon from '@mui/material/SvgIcon';
 import { MovieInput } from './MovieInput';
-import { AddColor } from './AddColor';
 import {
   Switch,
   Route,
@@ -35,27 +34,6 @@ import { createContext, useContext } from 'react'
 import Button from '@mui/material/Button';
 import HdIcon from '@mui/icons-material/Hd';
 import MovieIcon from '@mui/icons-material/Movie';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
-import {  useFormik } from 'formik';
-import * as yup from 'yup';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
-import { TicTacToe } from './TicTacToe';
-import TextField from '@mui/material/TextField';
-
-
-// const validateForm = (values) => {
-//   const errors = {};
-//   console.log("validateforms",values);
-
-//   if(values.password.length < 8){
-//     errors.password = "Pls provide a longer password"
-//   }
-
-//   console.log(errors);
-//   return errors;
-
-// };
 
 
 const context = createContext({ modec: "black" });
@@ -120,7 +98,7 @@ const AppBar = styled(MuiAppBar, {
 
 export function MiniDrawer({ movies, setMovies }) {
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -147,6 +125,7 @@ export function MiniDrawer({ movies, setMovies }) {
           <CssBaseline />
           <AppBar position="fixed" open={open}>
             <Toolbar>
+            <div className="navbar-container">
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -167,6 +146,7 @@ export function MiniDrawer({ movies, setMovies }) {
                   <ToggleColorMode />
                 </Typography>
               </context.Provider>
+              </div>
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open} className="drawer">
@@ -196,24 +176,9 @@ export function MiniDrawer({ movies, setMovies }) {
                 </ListItemIcon>
                 <Link to="/MovieInput">Adding Movie</Link>
               </ListItem>
-              <ListItem button key="Color Picker">
-                <ListItemIcon>
-                  <ColorLensIcon color="primary"/>
-                </ListItemIcon>
-                <Link to="/AddColor">Color Picker</Link>
-              </ListItem>
-              <ListItem button key="TicTacToe">
-                <ListItemIcon>
-                  <VideogameAssetIcon color="primary"/>
-                </ListItemIcon>
-                <Link to="/TicTacToe">Tic-Tac-Toe</Link>
-              </ListItem>
-              <ListItem button key="Form Validation">
-                <ListItemIcon>
-                  <FormatAlignCenterIcon color="primary"/>
-                </ListItemIcon>
-                <Link to="/FormValidation">Form Validation</Link>
-              </ListItem>
+
+
+
 
 
             </List>
@@ -234,18 +199,12 @@ export function MiniDrawer({ movies, setMovies }) {
             <Route path="/MovieInput">
               <MovieInput movies={movies} setMovies={setMovies} />
             </Route>
-            <Route path="/AddColor">
-              <AddColor />
-            </Route>
+
             <Route path="/Home">
               <Home />
             </Route>
-            <Route path="/TicTacToe">
-              <TicTacToe />
-            </Route>
-            <Route path="/FormValidation">
-              <FormValidation />
-            </Route>
+
+
             <Route path="**">
               Error Not Found
             </Route>
@@ -278,56 +237,6 @@ function ToggleColorMode() {
   );
 }
 
-const formValidationSchema = yup.object({
-  email:yup
-  .string()
-  .min(5,"Need bigger email")
-  .required("Please enter email"),
-  password:yup
-  .string()
-  .min(8,"require longer password")
-  .required("Please enter valid password"),
-
-})
 
 
-function FormValidation(){
 
-  const { handleSubmit,values,handleChange,handleBlur,errors,touched} = useFormik({
-    initialValues: { email: "", password: "",},
-    validationSchema: formValidationSchema,
-    onSubmit: (values) => {
-      console.log("onsubmit",values)
-    }
-  });
-
-  return(
-    <form onSubmit={handleSubmit} style={{marginTop:"20rem",marginLeft:"25rem"}}>
-      <TextField
-      id="email"
-      name="email"
-      value={values.email}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      type="email"
-      placeholder="Enter Email"
-      />
-      <TextField
-      id="password"
-      name="password"
-      value={values.password}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      type="password"
-      placeholder="Enter Password"
-      />
-      <Button type="submit">submit</Button>
-      <div className="form-error">
-      {errors.email && touched.email && errors.email}
-      </div>
-      <div>
-      {errors.password && touched.password && errors.password}
-      </div>
-    </form>
-  )
-}

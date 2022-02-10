@@ -17,11 +17,13 @@ export function MovieDetails() {
   },[id])
 
   return (
+    <section className="movie-div-container">
     <div className="movie-div-select">
       <h1 className="movie-title"> {movie.title} </h1>
       <iframe width="530" height="330" src={movie.trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       <h3 className="movie-rating"> 🌟: {movie.rating} </h3>
       <p> {movie.summary} </p>
     </div>
+    </section>
   );
 }

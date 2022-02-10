@@ -1,4 +1,3 @@
-import { useState,useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom';
@@ -49,19 +48,11 @@ export function MovieInput() {
           "Content-Type": "application/json"
         },
       })
-        .then(() =>  history.push("/"))
-      console.log("onsubmit",values)
+        .then(() =>  {history.push("/")})
     }
   });
 
-  const [movies, setMovies] = useState([]);
-  console.log(movies);
 
-  useEffect(() => {
-    fetch(`${API_URL}/movies`)
-      .then((data) => data.json())
-      .then((mvs) => setMovies(mvs))
-  }, []);
   const history = useHistory();
  
   return (
