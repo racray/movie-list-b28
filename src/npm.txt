@@ -1,0 +1,50 @@
+npx create-react-app myapp
+npm install react-router-dom@5
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm install react-confetti
+npm install react-use
+npm install formik --save
+npm install yup --save
+npm install ityped
+npm install redux react-redux
+npm start////////////////////////////
+
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+
+npm init /// keep entering
+npm i express
+
+npm install --save-dev nodemon
+"scripts":{
+	"start":"node index.js",
+	"dev":"nodemon index.js",
+	"echo \"
+npm run dev ///////////////////////////
+npm i mongodb
+
+  "name": "b28wd-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+
+npm i cors
+npm i dotenv
+
+npm install ---------> node_modules
+
+npm i bcrypt
+
+
+8169984687
+
+
+md C:\npm-cache
+npm config set cache C:\npm-cache
+
+
+git clone --single-branch -b react-admin https://github.com/safak/youtube
+
+https://buildpack-registry.s3.amazonaws.com/buildpacks/mars/create-react-app.tgz
